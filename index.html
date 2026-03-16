@@ -9,13 +9,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Inconsolata:wght@300;400&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root { --ink: #1a1a18; --paper: #f5f2eb; --muted: #9a9488; --accent: #c8622a; }
+    :root { --ink: #1a1a18; --paper: #f5f2eb; --muted: #5c5850; --accent: #c8622a; }
     html, body { height: 100%; }
-    body { background: var(--paper); color: var(--ink); font-family: 'Inconsolata', monospace; font-weight: 300; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 2rem; position: relative; overflow: hidden; }
+    body { background: var(--paper); color: var(--ink); font-family: 'Inconsolata', monospace; font-weight: 300; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 2rem 2rem 5rem; position: relative; }
     body::after { content: ''; position: fixed; left: 0; right: 0; top: 50%; height: 1px; background: var(--muted); opacity: 0.15; pointer-events: none; z-index: 0; }
     main { position: relative; z-index: 1; text-align: center; animation: fadeIn 1.2s ease forwards; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-    .wordmark { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(3rem, 10vw, 6rem); letter-spacing: -0.02em; line-height: 1; margin-bottom: 0.5rem; }
+    .wordmark { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-weight: 200; font-size: clamp(3rem, 10vw, 6rem); letter-spacing: -0.03em; line-height: 1; margin-bottom: 0.5rem; }
     .wordmark span { color: var(--accent); }
     .tagline { font-family: 'Inconsolata', monospace; font-weight: 300; font-size: clamp(0.7rem, 2vw, 0.85rem); letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); margin-bottom: 3.5rem; }
     .divider { width: 1px; height: 2rem; background: var(--muted); opacity: 0.4; margin: 0 auto 3.5rem; }
@@ -25,7 +25,11 @@
     nav a:hover { color: var(--accent); }
     nav a:hover::after { width: 100%; }
     .nav-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--muted); opacity: 0.5; }
-    footer { position: fixed; bottom: 2rem; left: 0; right: 0; text-align: center; font-size: 0.65rem; letter-spacing: 0.15em; color: var(--muted); opacity: 0.6; z-index: 1; }
+    footer { position: fixed; bottom: 2rem; left: 0; right: 0; text-align: center; font-size: 0.65rem; letter-spacing: 0.15em; color: var(--muted); z-index: 1; }
+    .tools-label { font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); margin-top: 3.5rem; margin-bottom: 1.25rem; }
+    .tools { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 0.6rem 2rem; max-width: 680px; margin: 0 auto; }
+    .tools a { font-family: 'Inconsolata', monospace; font-size: 0.72rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); text-decoration: none; padding-bottom: 1px; border-bottom: 1px solid transparent; transition: color 0.2s ease, border-color 0.2s ease; white-space: nowrap; }
+    .tools a:hover { color: var(--accent); border-bottom-color: var(--accent); }
   </style>
 </head>
 <body>
@@ -40,6 +44,17 @@
       <span class="nav-dot"></span>
       <a href="https://x.com/TheSevenPens" target="_blank">X</a>
     </nav>
+    <p class="tools-label">Tools</p>
+    <div class="tools">
+      <a href="https://thesevenpens.github.io/WebPressureExplorer/" target="_blank">Pressure Explorer</a>
+      <a href="https://thesevenpens.github.io/WebTabletTesterBasic/" target="_blank">Tablet Tester Basic</a>
+      <a href="https://thesevenpens.github.io/WebTabletTester/" target="_blank">Tablet Tester</a>
+      <a href="https://thesevenpens.github.io/DrawTabInventory/" target="_blank">DrawTab Inventory</a>
+      <a href="https://thesevenpens.github.io/DrawTabPenCompat/" target="_blank">DrawTab Pen Compat</a>
+      <a href="https://thesevenpens.github.io/PenPressureData/" target="_blank">Pen Pressure Data</a>
+      <a href="https://thesevenpens.github.io/Wacom-Driver-List/" target="_blank">Wacom Driver List</a>
+      <a href="https://thesevenpens.github.io/HtmlTabletTester/" target="_blank">HTML Tablet Tester</a>
+    </div>
   </main>
   <footer>sevenpens.com</footer>
 </body>
