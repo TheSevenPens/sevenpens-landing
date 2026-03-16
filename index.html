@@ -4,58 +4,394 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Seven Pens</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Inconsolata:wght@300;400&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root { --ink: #1a1a18; --paper: #f5f2eb; --muted: #5c5850; --accent: #c8622a; }
-    html, body { height: 100%; }
-    body { background: var(--paper); color: var(--ink); font-family: 'Inconsolata', monospace; font-weight: 300; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 2rem 2rem 5rem; position: relative; }
-    body::after { content: ''; position: fixed; left: 0; right: 0; top: 50%; height: 1px; background: var(--muted); opacity: 0.15; pointer-events: none; z-index: 0; }
-    main { position: relative; z-index: 1; text-align: center; animation: fadeIn 1.2s ease forwards; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-    .wordmark { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-weight: 200; font-size: clamp(3rem, 10vw, 6rem); letter-spacing: -0.03em; line-height: 1; margin-bottom: 0.5rem; }
-    .wordmark span { color: var(--accent); }
-    .tagline { font-family: 'Inconsolata', monospace; font-weight: 300; font-size: clamp(0.7rem, 2vw, 0.85rem); letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); margin-bottom: 3.5rem; }
-    .divider { width: 1px; height: 2rem; background: var(--muted); opacity: 0.4; margin: 0 auto 3.5rem; }
-    nav { display: flex; align-items: center; gap: 2.5rem; justify-content: center; flex-wrap: wrap; }
-    nav a { font-family: 'Inconsolata', monospace; font-size: 0.78rem; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink); text-decoration: none; position: relative; padding-bottom: 2px; transition: color 0.2s ease; }
-    nav a::after { content: ''; position: absolute; left: 0; bottom: 0; width: 0; height: 1px; background: var(--accent); transition: width 0.3s ease; }
-    nav a:hover { color: var(--accent); }
-    nav a:hover::after { width: 100%; }
-    .nav-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--muted); opacity: 0.5; }
-    footer { position: fixed; bottom: 2rem; left: 0; right: 0; text-align: center; font-size: 0.65rem; letter-spacing: 0.15em; color: var(--muted); z-index: 1; }
-    .tools-label { font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); margin-top: 3.5rem; margin-bottom: 1.25rem; }
-    .tools { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 0.6rem 2rem; max-width: 680px; margin: 0 auto; }
-    .tools a { font-family: 'Inconsolata', monospace; font-size: 0.72rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); text-decoration: none; padding-bottom: 1px; border-bottom: 1px solid transparent; transition: color 0.2s ease, border-color 0.2s ease; white-space: nowrap; }
-    .tools a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-1: #061626;
+      --bg-2: #10243a;
+      --bg-3: #1f2f44;
+      --c-1: #ff6d60;
+      --c-2: #ffb94e;
+      --c-3: #35d9c9;
+      --c-4: #6ec5ff;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow: hidden;
+      background:
+        radial-gradient(120vmax 90vmax at 12% 18%, #2a4466 0%, transparent 55%),
+        radial-gradient(90vmax 80vmax at 90% 85%, #25374f 0%, transparent 58%),
+        linear-gradient(130deg, var(--bg-1), var(--bg-2) 42%, var(--bg-3));
+    }
+
+    .layout {
+      min-height: 100vh;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 3vw;
+      padding: clamp(1.2rem, 3.2vw, 2.8rem);
+    }
+
+    .content {
+      max-width: 660px;
+      width: min(92%, 660px);
+      justify-self: start;
+      padding: clamp(1.2rem, 2.5vw, 2rem);
+      border-radius: 24px;
+      border: 1px solid rgba(188, 230, 255, 0.26);
+      background: linear-gradient(145deg, rgba(10, 34, 56, 0.68), rgba(11, 26, 45, 0.44));
+      box-shadow: 0 24px 42px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(6px);
+      animation: enter 1.2s ease-out both;
+    }
+
+    .kicker {
+      font-family: "Segoe UI", "Trebuchet MS", sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(223, 245, 255, 0.78);
+      margin-bottom: 0.9rem;
+    }
+
+    h1 {
+      font-family: "Segoe UI", "Trebuchet MS", sans-serif;
+      font-size: clamp(2rem, 5vw, 3.8rem);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      color: #f6fbff;
+      margin-bottom: 0.8rem;
+    }
+
+    h1 span {
+      color: #91e7ff;
+    }
+
+    .tagline {
+      font-family: "Consolas", "Courier New", monospace;
+      font-size: clamp(0.78rem, 1.7vw, 0.95rem);
+      color: rgba(223, 242, 255, 0.8);
+      margin-bottom: 1.3rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .nav,
+    .tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .nav {
+      margin-bottom: 1.1rem;
+    }
+
+    .nav a,
+    .tools a {
+      text-decoration: none;
+      color: #d6f5ff;
+      border: 1px solid rgba(145, 231, 255, 0.36);
+      background: linear-gradient(160deg, rgba(122, 214, 255, 0.14), rgba(102, 182, 255, 0.05));
+      padding: 0.46rem 0.72rem;
+      border-radius: 999px;
+      font-family: "Consolas", "Courier New", monospace;
+      font-size: 0.73rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: transform 0.24s ease, border-color 0.24s ease, background-color 0.24s ease;
+    }
+
+    .nav a:hover,
+    .tools a:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 205, 122, 0.78);
+      background: linear-gradient(160deg, rgba(255, 171, 106, 0.2), rgba(255, 145, 87, 0.06));
+    }
+
+    .tools-title {
+      margin-bottom: 0.75rem;
+      color: rgba(228, 246, 255, 0.84);
+      font-family: "Segoe UI", "Trebuchet MS", sans-serif;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-size: 0.68rem;
+    }
+
+    .orb-wrap {
+      width: 100%;
+      min-height: 100%;
+      display: grid;
+      place-items: center;
+      justify-self: end;
+    }
+
+    .stage {
+      width: min(74vmin, 600px);
+      aspect-ratio: 1;
+      position: relative;
+      display: grid;
+      place-items: center;
+      animation: enter 1.4s ease-out both;
+    }
+
+    .stage::before,
+    .stage::after {
+      content: "";
+      position: absolute;
+      inset: -12%;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .stage::before {
+      background: radial-gradient(circle, rgba(94, 173, 255, 0.4) 0%, rgba(94, 173, 255, 0) 66%);
+      filter: blur(28px);
+      opacity: 0.65;
+      animation: auraPulse 10s ease-in-out infinite;
+    }
+
+    .stage::after {
+      background: radial-gradient(circle, rgba(255, 177, 89, 0.2) 0%, rgba(255, 177, 89, 0) 72%);
+      transform: scale(1.08);
+      filter: blur(30px);
+      animation: auraPulse 13s ease-in-out infinite reverse;
+    }
+
+    .blob {
+      width: 100%;
+      height: 100%;
+      border-radius: 52% 48% 45% 55% / 44% 54% 46% 56%;
+      background:
+        radial-gradient(55% 50% at 32% 28%, rgba(255, 255, 255, 0.52) 0%, rgba(255, 255, 255, 0) 65%),
+        radial-gradient(44% 36% at 72% 72%, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0) 72%),
+        radial-gradient(70% 64% at 22% 85%, var(--c-3) 0%, transparent 72%),
+        radial-gradient(82% 74% at 78% 18%, var(--c-1) 0%, transparent 66%),
+        radial-gradient(90% 75% at 50% 42%, var(--c-2) 0%, var(--c-4) 58%, #3f9bff 100%);
+      background-size: 115% 115%, 120% 120%, 132% 132%, 140% 140%, 115% 115%;
+      background-position: 12% 14%, 90% 86%, 18% 80%, 85% 16%, 45% 50%;
+      box-shadow:
+        inset -24px -26px 48px rgba(0, 26, 64, 0.27),
+        inset 18px 18px 34px rgba(255, 255, 255, 0.24),
+        0 42px 72px rgba(0, 0, 0, 0.33);
+      transform-origin: 50% 50%;
+      animation:
+        wobble 18s ease-in-out infinite,
+        breathe 9.5s ease-in-out infinite,
+        chroma 22s ease-in-out infinite,
+        drift 28s linear infinite;
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .blob::before,
+    .blob::after {
+      content: "";
+      position: absolute;
+      inset: -22%;
+      border-radius: 50%;
+      mix-blend-mode: soft-light;
+      pointer-events: none;
+    }
+
+    .blob::before {
+      background:
+        repeating-radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.08) 0 12px, rgba(255, 255, 255, 0) 13px 24px),
+        conic-gradient(from 45deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0));
+      filter: blur(3px);
+      opacity: 0.75;
+      animation: surfaceWave 24s linear infinite;
+    }
+
+    .blob::after {
+      background:
+        radial-gradient(40% 30% at 34% 30%, rgba(255, 255, 255, 0.56) 0%, rgba(255, 255, 255, 0) 80%),
+        radial-gradient(70% 50% at 64% 74%, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 82%);
+      animation: shimmer 8.5s ease-in-out infinite;
+    }
+
+    @keyframes enter {
+      from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.97);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes wobble {
+      0%,
+      100% {
+        border-radius: 52% 48% 45% 55% / 44% 54% 46% 56%;
+      }
+      25% {
+        border-radius: 44% 56% 58% 42% / 56% 42% 58% 44%;
+      }
+      50% {
+        border-radius: 58% 42% 48% 52% / 50% 60% 40% 50%;
+      }
+      75% {
+        border-radius: 46% 54% 42% 58% / 62% 46% 54% 38%;
+      }
+    }
+
+    @keyframes breathe {
+      0%,
+      100% {
+        transform: scale(1) rotate(0deg);
+      }
+      50% {
+        transform: scale(1.04) rotate(3deg);
+      }
+    }
+
+    @keyframes chroma {
+      0%,
+      100% {
+        filter: hue-rotate(0deg) saturate(1.05);
+      }
+      33% {
+        filter: hue-rotate(32deg) saturate(1.1);
+      }
+      66% {
+        filter: hue-rotate(-22deg) saturate(1.12);
+      }
+    }
+
+    @keyframes drift {
+      0% {
+        background-position: 12% 14%, 90% 86%, 18% 80%, 85% 16%, 45% 50%;
+      }
+      50% {
+        background-position: 22% 18%, 82% 80%, 26% 74%, 74% 24%, 56% 42%;
+      }
+      100% {
+        background-position: 12% 14%, 90% 86%, 18% 80%, 85% 16%, 45% 50%;
+      }
+    }
+
+    @keyframes surfaceWave {
+      0% {
+        transform: rotate(0deg) scale(1.06);
+      }
+      50% {
+        transform: rotate(180deg) scale(1.12);
+      }
+      100% {
+        transform: rotate(360deg) scale(1.06);
+      }
+    }
+
+    @keyframes shimmer {
+      0%,
+      100% {
+        transform: translate(-2%, -2%) scale(1);
+        opacity: 0.72;
+      }
+      50% {
+        transform: translate(2%, 1.5%) scale(1.04);
+        opacity: 0.95;
+      }
+    }
+
+    @keyframes auraPulse {
+      0%,
+      100% {
+        opacity: 0.48;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 0.9;
+        transform: scale(1.07);
+      }
+    }
+
+    @media (max-width: 700px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+        padding: 1rem;
+      }
+
+      .orb-wrap {
+        order: -1;
+      }
+
+      .content {
+        width: 100%;
+      }
+
+      .stage {
+        width: min(82vmin, 460px);
+      }
+
+      .blob {
+        box-shadow:
+          inset -16px -18px 36px rgba(0, 26, 64, 0.24),
+          inset 12px 12px 26px rgba(255, 255, 255, 0.22),
+          0 28px 48px rgba(0, 0, 0, 0.34);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .stage,
+      .blob,
+      .blob::before,
+      .blob::after,
+      .stage::before,
+      .stage::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
   </style>
 </head>
 <body>
-  <main>
-    <h1 class="wordmark">Seven<span>Pens</span></h1>
-    <p class="tagline">Exploring Creative Technology</p>
-    <div class="divider"></div>
-    <nav>
-      <a href="https://docs.sevenpens.com" target="_blank">Docs</a>
-      <span class="nav-dot"></span>
-      <a href="https://www.youtube.com/@thesevenpens" target="_blank">YouTube</a>
-      <span class="nav-dot"></span>
-      <a href="https://x.com/TheSevenPens" target="_blank">X</a>
-    </nav>
-    <p class="tools-label">Tools</p>
-    <div class="tools">
-      <a href="https://thesevenpens.github.io/WebPressureExplorer/" target="_blank">Pressure Explorer</a>
-      <a href="https://thesevenpens.github.io/WebTabletTesterBasic/" target="_blank">Tablet Tester Basic</a>
-      <a href="https://thesevenpens.github.io/WebTabletTester/" target="_blank">Tablet Tester</a>
-      <a href="https://thesevenpens.github.io/DrawTabInventory/" target="_blank">DrawTab Inventory</a>
-      <a href="https://thesevenpens.github.io/DrawTabPenCompat/" target="_blank">DrawTab Pen Compat</a>
-      <a href="https://thesevenpens.github.io/PenPressureData/" target="_blank">Pen Pressure Data</a>
-      <a href="https://thesevenpens.github.io/Wacom-Driver-List/" target="_blank">Wacom Driver List</a>
-      <a href="https://thesevenpens.github.io/HtmlTabletTester/" target="_blank">HTML Tablet Tester</a>
-    </div>
-  </main>
-  <footer>sevenpens.com</footer>
+  <div class="layout">
+    <section class="content" aria-label="Seven Pens links">
+      <h1>Seven<span>Pens</span></h1>
+      <p class="tagline">Tools, docs, and experiments for creative workflows</p>
+
+      <nav class="nav" aria-label="Primary links">
+        <a href="https://docs.sevenpens.com" target="_blank" rel="noopener noreferrer">Docs</a>
+        <a href="https://www.youtube.com/@thesevenpens" target="_blank" rel="noopener noreferrer">YouTube</a>
+        <a href="https://x.com/TheSevenPens" target="_blank" rel="noopener noreferrer">X</a>
+      </nav>
+
+      <p class="tools-title">Tools</p>
+      <div class="tools" aria-label="Tool links">
+        <a href="https://thesevenpens.github.io/WebPressureExplorer/" target="_blank" rel="noopener noreferrer">Pressure Explorer</a>
+        <a href="https://thesevenpens.github.io/WebTabletTesterBasic/" target="_blank" rel="noopener noreferrer">Tablet Tester Basic</a>
+        <a href="https://thesevenpens.github.io/WebTabletTester/" target="_blank" rel="noopener noreferrer">Tablet Tester</a>
+        <a href="https://thesevenpens.github.io/DrawTabInventory/" target="_blank" rel="noopener noreferrer">DrawTab Inventory</a>
+        <a href="https://thesevenpens.github.io/DrawTabPenCompat/" target="_blank" rel="noopener noreferrer">DrawTab Pen Compat</a>
+        <a href="https://thesevenpens.github.io/PenPressureData/" target="_blank" rel="noopener noreferrer">Pen Pressure Data</a>
+        <a href="https://thesevenpens.github.io/Wacom-Driver-List/" target="_blank" rel="noopener noreferrer">Wacom Driver List</a>
+        <a href="https://thesevenpens.github.io/HtmlTabletTester/" target="_blank" rel="noopener noreferrer">HTML Tablet Tester</a>
+      </div>
+    </section>
+
+    <main class="orb-wrap" aria-label="Animated colorful blob">
+      <div class="stage">
+        <div class="blob" role="img" aria-label="A slow undulating globular form"></div>
+      </div>
+    </main>
+  </div>
 </body>
 </html>
