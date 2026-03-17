@@ -15,9 +15,20 @@
     }
 
     :root {
-      --bg-1: #220012;
-      --bg-2: #3a001e;
-      --bg-3: #55112f;
+      --bg-1: #0d0007;
+      --bg-2: #21000f;
+      --bg-3: #3a001c;
+      --glow-a: rgba(255, 0, 94, 0.2);
+      --glow-b: rgba(165, 28, 87, 0.16);
+      --glow-c: rgba(255, 72, 136, 0.08);
+      --shadow-a: rgba(0, 0, 0, 0.38);
+      --text-main: #f6fbff;
+      --text-link: #d6f5ff;
+      --text-link-hover: #ffcf95;
+      --text-label: rgba(228, 246, 255, 0.84);
+      --toggle-bg: rgba(12, 3, 9, 0.72);
+      --toggle-border: rgba(255, 255, 255, 0.22);
+      --toggle-text: #f6fbff;
     }
 
     html,
@@ -30,10 +41,28 @@
       font-family: "Google Sans Flex", "Segoe UI", sans-serif;
       overflow: hidden;
       background:
-        radial-gradient(120vmax 90vmax at 12% 18%, rgba(255, 0, 94, 0.24) 0%, transparent 55%),
-        radial-gradient(90vmax 80vmax at 90% 85%, rgba(165, 28, 87, 0.2) 0%, transparent 58%),
-        radial-gradient(70vmax 60vmax at 48% 40%, rgba(255, 72, 136, 0.1) 0%, transparent 60%),
+        radial-gradient(120vmax 90vmax at 12% 18%, var(--glow-a) 0%, transparent 55%),
+        radial-gradient(90vmax 80vmax at 90% 85%, var(--glow-b) 0%, transparent 58%),
+        radial-gradient(70vmax 60vmax at 48% 40%, var(--glow-c) 0%, transparent 60%),
+        radial-gradient(130vmax 100vmax at 52% 62%, var(--shadow-a) 0%, transparent 62%),
         linear-gradient(130deg, var(--bg-1), var(--bg-2) 42%, var(--bg-3));
+    }
+
+    body[data-theme="light"] {
+      --bg-1: #ffe7f1;
+      --bg-2: #ffd7e8;
+      --bg-3: #ffc5dd;
+      --glow-a: rgba(255, 0, 94, 0.08);
+      --glow-b: rgba(165, 28, 87, 0.07);
+      --glow-c: rgba(255, 72, 136, 0.06);
+      --shadow-a: rgba(123, 31, 75, 0.08);
+      --text-main: #34111f;
+      --text-link: #4b1a2b;
+      --text-link-hover: #8f0036;
+      --text-label: rgba(75, 26, 43, 0.82);
+      --toggle-bg: rgba(255, 255, 255, 0.76);
+      --toggle-border: rgba(82, 18, 42, 0.2);
+      --toggle-text: #351120;
     }
 
     .layout {
@@ -51,16 +80,14 @@
       width: min(92%, 660px);
       justify-self: start;
       padding: clamp(1.2rem, 2.5vw, 2rem);
-      background: transparent;
     }
 
     h1 {
-      font-family: inherit;
       font-size: clamp(2rem, 5vw, 3.8rem);
       font-weight: 650;
       line-height: 0.95;
       letter-spacing: -0.03em;
-      color: #f6fbff;
+      color: var(--text-main);
       margin-bottom: 0.8rem;
     }
 
@@ -87,30 +114,32 @@
     .nav a,
     .tools a {
       text-decoration: none;
-      color: #d6f5ff;
-      padding: 0;
-      font-family: inherit;
-      font-size: 0.73rem;
+      color: var(--text-link);
       font-weight: 500;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      transition: transform 0.24s ease, color 0.24s ease;
+    }
+
+    .nav a {
+      font-size: 0.9rem;
+    }
+
+    .tools a {
+      font-size: 0.73rem;
     }
 
     .nav a:hover,
     .tools a:hover {
-      transform: translateY(-2px);
-      color: #ffcf95;
+      color: var(--text-link-hover);
     }
 
     .tools-title {
       margin-bottom: 0.75rem;
-      color: rgba(228, 246, 255, 0.84);
-      font-family: inherit;
+      color: var(--text-label);
       font-weight: 500;
-      letter-spacing: 0.22em;
+      letter-spacing: 0.11em;
       text-transform: uppercase;
-      font-size: 0.68rem;
+      font-size: 0.9rem;
     }
 
     .orb-wrap {
@@ -156,6 +185,25 @@
       display: block;
       object-fit: contain;
       filter: drop-shadow(0 36px 64px rgba(0, 0, 0, 0.28));
+    }
+
+    .theme-toggle {
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+      z-index: 10;
+      border: 1px solid var(--toggle-border);
+      background: var(--toggle-bg);
+      color: var(--toggle-text);
+      padding: 0.48rem 0.72rem;
+      border-radius: 999px;
+      font-family: inherit;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      backdrop-filter: blur(6px);
     }
 
     @media (max-width: 700px) {
@@ -213,5 +261,30 @@
       </div>
     </main>
   </div>
+  <button class="theme-toggle" type="button" aria-label="Toggle light and dark mode">Light Mode</button>
+  <script>
+    const storageKey = 'sevenpens-theme';
+    const button = document.querySelector('.theme-toggle');
+    const bodyEl = document.body;
+
+    const applyTheme = (theme) => {
+      bodyEl.setAttribute('data-theme', theme);
+      if (button) {
+        button.textContent = theme === 'dark' ? 'Light Mode' : 'Dark Mode';
+      }
+    };
+
+    const savedTheme = localStorage.getItem(storageKey);
+    const initialTheme = savedTheme === 'light' ? 'light' : 'dark';
+    applyTheme(initialTheme);
+
+    if (button) {
+      button.addEventListener('click', () => {
+        const nextTheme = bodyEl.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+        applyTheme(nextTheme);
+        localStorage.setItem(storageKey, nextTheme);
+      });
+    }
+  </script>
 </body>
 </html>
