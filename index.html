@@ -26,6 +26,7 @@
       --text-link: #d6f5ff;
       --text-link-hover: #ffcf95;
       --text-label: rgba(228, 246, 255, 0.84);
+      --text-muted: rgba(228, 246, 255, 0.58);
       --toggle-bg: rgba(12, 3, 9, 0.72);
       --toggle-border: rgba(255, 255, 255, 0.22);
       --toggle-text: #f6fbff;
@@ -61,6 +62,7 @@
       --text-link: #4b1a2b;
       --text-link-hover: #8f0036;
       --text-label: rgba(75, 26, 43, 0.82);
+      --text-muted: rgba(75, 26, 43, 0.58);
       --toggle-bg: rgba(255, 255, 255, 0.76);
       --toggle-border: rgba(82, 18, 42, 0.2);
       --toggle-text: #351120;
@@ -77,8 +79,8 @@
     }
 
     .content {
-      max-width: 660px;
-      width: min(92%, 660px);
+      max-width: 1200px;
+      width: min(92%, 1200px);
       justify-self: start;
       padding: clamp(1.2rem, 2.5vw, 2rem);
     }
@@ -143,6 +145,21 @@
       font-size: 0.9rem;
     }
 
+    .tool-desc {
+      color: var(--text-muted);
+      font-size: 0.65rem;
+      font-weight: 400;
+      letter-spacing: normal;
+      text-transform: none;
+    }
+
+    .tools-columns {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(1.5rem, 4vw, 3rem);
+      align-items: start;
+    }
+
     .theme-toggle {
       position: fixed;
       right: 1rem;
@@ -171,6 +188,10 @@
       .content {
         width: 100%;
       }
+
+      .tools-columns {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -184,16 +205,35 @@
         <a href="https://x.com/TheSevenPens" target="_blank" rel="noopener noreferrer">X</a>
       </nav>
 
-      <p class="tools-title">Drawing Tablets</p>
-      <div class="tools" aria-label="Tool links">
-         <a href="https://docs.sevenpens.com/drawtab" target="_blank" rel="noopener noreferrer">docs</a> 
-         <a href="https://docs.sevenpens.com/devnotes" target="_blank" rel="noopener noreferrer">developer notes</a> 
-         <a href="https://thesevenpens.github.io/WebPressureExplorer/" target="_blank" rel="noopener noreferrer">Pressure Explorer</a> 
-         <a href="https://thesevenpens.github.io/WebTabletTesterBasic/" target="_blank" rel="noopener noreferrer">Tablet Tester Basic </a> 
-         <a href="https://thesevenpens.github.io/WebTabletTester/" target="_blank" rel="noopener noreferrer">Tablet Tester Advanced </a>
-         <a href="https://thesevenpens.github.io/DrawTabDataExplorer/" target="_blank" rel="noopener noreferrer"> Data Explorer</a>
-         <a href="https://thesevenpens.github.io/WebDrawTabSim/" target="_blank" rel="noopener noreferrer">Tablet simulator</a>
-         <a href="https://thesevenpens.github.io/WebDrawTabLagSim/" target="_blank" rel="noopener noreferrer">Lag simulator</a>
+      <div class="tools-columns">
+
+        <div class="tools-column">
+          <p class="tools-title">Docs</p>
+          <div class="tools" aria-label="Drawing tablet links">
+            <a href="https://docs.sevenpens.com/drawtab" target="_blank" rel="noopener noreferrer">docs</a>
+            <a href="https://docs.sevenpens.com/devnotes" target="_blank" rel="noopener noreferrer">developer notes</a>
+          </div>
+        </div>
+
+        <div class="tools-column">
+          <p class="tools-title">Online tools</p>
+          <div class="tools" aria-label="Drawing tablet links">
+            <a href="https://thesevenpens.github.io/WebPressureExplorer/" target="_blank" rel="noopener noreferrer">Pressure Explorer</a>
+            <a href="https://thesevenpens.github.io/WebTabletTesterBasic/" target="_blank" rel="noopener noreferrer">Tablet Tester Basic </a>
+            <a href="https://thesevenpens.github.io/WebTabletTester/" target="_blank" rel="noopener noreferrer">Tablet Tester Advanced </a>
+            <a href="https://thesevenpens.github.io/DrawTabDataExplorer/" target="_blank" rel="noopener noreferrer"> Data Explorer</a>
+            <a href="https://thesevenpens.github.io/WebDrawTabSim/" target="_blank" rel="noopener noreferrer">Tablet simulator</a>
+            <a href="https://thesevenpens.github.io/WebDrawTabLagSim/" target="_blank" rel="noopener noreferrer">Lag simulator</a>
+          </div>
+        </div>
+
+        <div class="tools-column">
+          <p class="tools-title">Local tools</p>
+          <div class="tools" aria-label="Drawing tablet links">
+            <a href="https://github.com/TheSevenPens/PixelSharpnessTester" target="_blank" rel="noopener noreferrer">Pixel sharpness tester</a>
+            <a href="https://github.com/TheSevenPens/WinPenKit" target="_blank" rel="noopener noreferrer">WinPenKit</a> <span class="tool-desc">(Windows only) - library to make it easy to use and switch between WinTab and Windows Ink APIs</span>
+          </div>
+        </div>
       </div>
     </section>
 
