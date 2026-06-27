@@ -3,7 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Seven Pens — exploring creative tech. Drawing tablet docs, online tools, and libraries.">
+  <meta name="theme-color" content="#180f14">
   <title>Seven Pens</title>
+  <link rel="canonical" href="https://sevenpens.com/">
+  <link rel="icon" href="/7P-Logo-Core.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Seven Pens">
+  <meta property="og:description" content="Seven Pens — exploring creative tech. Drawing tablet docs, online tools, and libraries.">
+  <meta property="og:url" content="https://sevenpens.com/">
+  <meta property="og:image" content="https://sevenpens.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Seven Pens">
+  <meta name="twitter:description" content="Seven Pens — exploring creative tech. Drawing tablet docs, online tools, and libraries.">
+  <meta name="twitter:image" content="https://sevenpens.com/og-image.png">
+  <script>
+    (function () {
+      const storageKey = 'sevenpens-theme';
+      const savedTheme = localStorage.getItem(storageKey);
+      const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+      const theme = savedTheme === 'light' || savedTheme === 'dark'
+        ? savedTheme
+        : (prefersLight ? 'light' : 'dark');
+
+      document.documentElement.setAttribute('data-theme', theme);
+      document.documentElement.style.colorScheme = theme;
+
+      const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+      if (themeColorMeta) {
+        themeColorMeta.setAttribute('content', theme === 'dark' ? '#180f14' : '#faf4f6');
+      }
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@8..144,300..800&display=swap" rel="stylesheet">
@@ -15,21 +47,43 @@
     }
 
     :root {
-      --bg-1: #0d0007;
-      --bg-2: #21000f;
-      --bg-3: #3a001c;
-      --glow-a: rgba(255, 0, 94, 0.2);
-      --glow-b: rgba(165, 28, 87, 0.16);
-      --glow-c: rgba(255, 72, 136, 0.08);
+      color-scheme: dark;
+      --bg-1: #180f14;
+      --bg-2: #221019;
+      --bg-3: #2d1420;
+      --glow-a: rgba(196, 90, 130, 0.16);
+      --glow-b: rgba(139, 42, 82, 0.12);
+      --glow-c: rgba(210, 130, 170, 0.08);
       --shadow-a: rgba(0, 0, 0, 0.38);
-      --text-main: #f6fbff;
-      --text-link: #d6f5ff;
-      --text-link-hover: #ffcf95;
-      --text-label: rgba(228, 246, 255, 0.84);
-      --text-muted: rgba(228, 246, 255, 0.58);
-      --toggle-bg: rgba(12, 3, 9, 0.72);
-      --toggle-border: rgba(255, 255, 255, 0.22);
-      --toggle-text: #f6fbff;
+      --text-main: #ede0e8;
+      --text-heading: #f5eaf0;
+      --text-link: #d48aa8;
+      --text-link-hover: #e8a8c4;
+      --text-muted: rgba(237, 224, 232, 0.55);
+      --accent: #c44d7a;
+      --toggle-bg: rgba(24, 15, 20, 0.78);
+      --toggle-border: rgba(237, 224, 232, 0.2);
+      --toggle-text: #ede0e8;
+    }
+
+    html[data-theme="light"] {
+      color-scheme: light;
+      --bg-1: #faf4f6;
+      --bg-2: #f2e8ed;
+      --bg-3: #e8dce4;
+      --glow-a: rgba(196, 90, 130, 0.18);
+      --glow-b: rgba(139, 42, 82, 0.1);
+      --glow-c: rgba(200, 120, 160, 0.12);
+      --shadow-a: rgba(74, 40, 56, 0.08);
+      --text-main: #4a3238;
+      --text-heading: #3a2228;
+      --text-link: #9e4268;
+      --text-link-hover: #b85684;
+      --text-muted: rgba(74, 50, 56, 0.52);
+      --accent: #c44d7a;
+      --toggle-bg: rgba(250, 244, 246, 0.9);
+      --toggle-border: rgba(74, 50, 56, 0.18);
+      --toggle-text: #3a2228;
     }
 
     html,
@@ -41,7 +95,7 @@
       min-height: 100vh;
       font-family: "Google Sans Flex", "Segoe UI", sans-serif;
       color: var(--text-main);
-      overflow: hidden;
+      overflow-x: hidden;
       background:
         radial-gradient(120vmax 90vmax at 12% 18%, var(--glow-a) 0%, transparent 55%),
         radial-gradient(90vmax 80vmax at 90% 85%, var(--glow-b) 0%, transparent 58%),
@@ -50,22 +104,16 @@
         linear-gradient(130deg, var(--bg-1), var(--bg-2) 42%, var(--bg-3));
     }
 
-    body[data-theme="light"] {
-      --bg-1: #ffe7f1;
-      --bg-2: #ffd7e8;
-      --bg-3: #ffc5dd;
-      --glow-a: rgba(255, 0, 94, 0.08);
-      --glow-b: rgba(165, 28, 87, 0.07);
-      --glow-c: rgba(255, 72, 136, 0.06);
-      --shadow-a: rgba(123, 31, 75, 0.08);
-      --text-main: #34111f;
-      --text-link: #4b1a2b;
-      --text-link-hover: #8f0036;
-      --text-label: rgba(75, 26, 43, 0.82);
-      --text-muted: rgba(75, 26, 43, 0.58);
-      --toggle-bg: rgba(255, 255, 255, 0.76);
-      --toggle-border: rgba(82, 18, 42, 0.2);
-      --toggle-text: #351120;
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+      border: 0;
     }
 
     .layout {
@@ -79,8 +127,8 @@
     }
 
     .content {
-      max-width: 1200px;
-      width: min(92%, 1200px);
+      max-width: 1400px;
+      width: min(92%, 1400px);
       justify-self: start;
       padding: clamp(1.2rem, 2.5vw, 2rem);
     }
@@ -95,54 +143,52 @@
     }
 
     h1 span {
-      color: #ff005e;
+      color: var(--accent);
     }
 
-    .nav,
     .tools {
+      list-style: none;
       display: flex;
+      flex-direction: column;
+      align-items: flex-start;
       gap: 0.6rem;
     }
 
-    .nav {
-      flex-wrap: wrap;
-      margin-bottom: 2rem;
-    }
-
-    .tools {
+    .tool-item {
+      display: flex;
       flex-direction: column;
       align-items: flex-start;
+      gap: 0.25rem;
     }
 
-    .nav a,
     .tools a {
       text-decoration: none;
       color: var(--text-link);
       font-weight: 500;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-    }
-
-    .nav a {
-      font-size: 0.9rem;
-    }
-
-    .tools a {
       font-size: 0.73rem;
     }
 
-    .nav a:hover,
     .tools a:hover {
       color: var(--text-link-hover);
     }
 
+    .tools a:focus-visible,
+    .theme-toggle:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
     .tools-title {
-      margin-bottom: 0.75rem;
-      color: var(--text-label);
-      font-weight: 500;
-      letter-spacing: 0.11em;
+      margin-bottom: 1rem;
+      padding-bottom: 0.55rem;
+      border-bottom: 1px solid var(--toggle-border);
+      color: var(--text-heading);
+      font-weight: 650;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      font-size: 0.9rem;
+      font-size: 1.05rem;
     }
 
     .tool-desc {
@@ -155,7 +201,7 @@
 
     .tools-columns {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: clamp(1.5rem, 4vw, 3rem);
       align-items: start;
     }
@@ -179,6 +225,12 @@
       backdrop-filter: blur(6px);
     }
 
+    @media (max-width: 1000px) {
+      .tools-columns {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
     @media (max-width: 700px) {
       .layout {
         gap: 1.2rem;
@@ -196,68 +248,116 @@
   </style>
 </head>
 <body>
-  <div class="layout">
-    <section class="content" aria-label="Seven Pens links">
-      <h1>Seven<span>Pens</span></h1>
-
-      <nav class="nav" aria-label="Primary links">
-        <a href="https://www.youtube.com/@sevenpens" target="_blank" rel="noopener noreferrer">YouTube</a>
-        <a href="https://x.com/TheSevenPens" target="_blank" rel="noopener noreferrer">X</a>
-      </nav>
+  <main class="layout" id="main">
+    <div class="content">
+      <h1>Seven <span>Pens</span></h1>
 
       <div class="tools-columns">
 
-        <div class="tools-column">
-          <p class="tools-title">Docs</p>
-          <div class="tools" aria-label="Drawing tablet links">
-            <a href="https://docs.sevenpens.com/drawtab" target="_blank" rel="noopener noreferrer">drawing tablet docs</a>
-            <a href="https://docs.sevenpens.com/devnotes" target="_blank" rel="noopener noreferrer">developer notes</a>
-          </div>
-        </div>
+        <nav class="tools-column" aria-labelledby="social-heading">
+          <h2 class="tools-title" id="social-heading">Social</h2>
+          <ul class="tools">
+            <li><a href="https://www.youtube.com/@sevenpens" target="_blank" rel="noopener noreferrer">YouTube</a></li>
+            <li><a href="https://x.com/TheSevenPens" target="_blank" rel="noopener noreferrer">X (TWITTER)</a></li>
+            <li><a href="https://discord.gg/Rr2MXeM7Ny" target="_blank" rel="noopener noreferrer">Drawing tablet Discord</a></li>
+            <li><a href="https://github.com/TheSevenPens" target="_blank" rel="noopener noreferrer">Github</a></li>
+          </ul>
+        </nav>
 
-        <div class="tools-column">
-          <p class="tools-title">Online tools</p>
-          <div class="tools" aria-label="Drawing tablet links">
-            <a href="https://thesevenpens.github.io/WebPressureExplorer/" target="_blank" rel="noopener noreferrer">Pressure Explorer</a>
-            <a href="https://thesevenpens.github.io/WebTabletTesterBasic/" target="_blank" rel="noopener noreferrer">Tablet Tester Basic </a>
-            <a href="https://thesevenpens.github.io/WebTabletTester/" target="_blank" rel="noopener noreferrer">Tablet Tester Advanced </a>
-            <a href="https://thesevenpens.github.io/DrawTabDataExplorer/" target="_blank" rel="noopener noreferrer"> Data Explorer</a>
-            <a href="https://thesevenpens.github.io/WebDrawTabSim/" target="_blank" rel="noopener noreferrer">Tablet simulator</a>
-            <a href="https://thesevenpens.github.io/WebDrawTabLagSim/" target="_blank" rel="noopener noreferrer">Lag simulator</a>
-          </div>
-        </div>
+        <nav class="tools-column" aria-labelledby="docs-heading">
+          <h2 class="tools-title" id="docs-heading">Docs</h2>
+          <ul class="tools">
+            <li><a href="https://docs.sevenpens.com/drawtab" target="_blank" rel="noopener noreferrer">Drawing tablet docs</a></li>
+            <li><a href="https://docs.sevenpens.com/devnotes" target="_blank" rel="noopener noreferrer">Developer notes</a></li>
+          </ul>
+        </nav>
 
-        <div class="tools-column">
-          <p class="tools-title">Local tools</p>
-          <div class="tools" aria-label="Drawing tablet links">
-            <a href="https://github.com/TheSevenPens/PixelSharpnessTester" target="_blank" rel="noopener noreferrer">Pixel sharpness tester</a>
-            <a href="https://github.com/TheSevenPens/WinPenKit" target="_blank" rel="noopener noreferrer">WinPenKit</a> <span class="tool-desc">(Windows only) - library to make it easy to use and switch between WinTab and Windows Ink APIs</span>
-          </div>
-        </div>
+        <nav class="tools-column" aria-labelledby="online-tools-heading">
+          <h2 class="tools-title" id="online-tools-heading">Online tools</h2>
+          <ul class="tools">
+            <li><a href="https://thesevenpens.github.io/WebPressureExplorer/" target="_blank" rel="noopener noreferrer">Pressure Explorer</a></li>
+            <li><a href="https://thesevenpens.github.io/WebTabletTesterBasic/" target="_blank" rel="noopener noreferrer">Tablet Tester Basic</a></li>
+            <li><a href="https://thesevenpens.github.io/WebTabletTester/" target="_blank" rel="noopener noreferrer">Tablet Tester Advanced</a></li>
+            <li><a href="https://thesevenpens.github.io/DrawTabDataExplorer/" target="_blank" rel="noopener noreferrer">Data Explorer</a></li>
+            <li><a href="https://thesevenpens.github.io/WebDrawTabSim/" target="_blank" rel="noopener noreferrer">Tablet simulator</a></li>
+            <li><a href="https://thesevenpens.github.io/WebDrawTabLagSim/" target="_blank" rel="noopener noreferrer">Lag simulator</a></li>
+          </ul>
+        </nav>
+
+        <nav class="tools-column" aria-labelledby="tools-libraries-heading">
+          <h2 class="tools-title" id="tools-libraries-heading">Tools and Libraries</h2>
+          <ul class="tools">
+            <li><a href="https://github.com/TheSevenPens/PixelSharpnessTester" target="_blank" rel="noopener noreferrer">Pixel sharpness tester</a></li>
+            <li class="tool-item">
+              <a href="https://github.com/TheSevenPens/WinPenKit" target="_blank" rel="noopener noreferrer">WinPenKit</a>
+              <span class="tool-desc">(Windows only) - library to make it easy to use and switch between WinTab and Windows Ink APIs</span>
+            </li>
+            <li><a href="https://github.com/TheSevenPens/OTDWindowsHelper" target="_blank" rel="noopener noreferrer">OTDWindowsHelper</a>
+              <span class="tool-desc">(Windows only) - A UI to make it simple to use OpenTabletDriver on Windows for artists</span>
+            </li>
+            <li class="tool-item">
+              <a href="https://github.com/TheSevenPens/PenPressureProfiler" target="_blank" rel="noopener noreferrer">PenPressureProfiler</a>
+              <span class="tool-desc">(Windows only) - Tool to make mereasure a pen's pressure response. Requires a specific scale for physical force measurements.</span>
+            </li>
+            
+          </ul>
+        </nav>
       </div>
-    </section>
-
-  </div>
-  <button class="theme-toggle" type="button" aria-label="Toggle light and dark mode">Light Mode</button>
+    </div>
+  </main>
+  <button class="theme-toggle" type="button" aria-label="Switch to light mode">Light Mode</button>
   <script>
     const storageKey = 'sevenpens-theme';
     const button = document.querySelector('.theme-toggle');
-    const bodyEl = document.body;
+    const rootEl = document.documentElement;
+    const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+
+    const getPreferredTheme = () => (
+      window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
+    );
+
+    const getSavedTheme = () => {
+      const savedTheme = localStorage.getItem(storageKey);
+      return savedTheme === 'light' || savedTheme === 'dark' ? savedTheme : null;
+    };
 
     const applyTheme = (theme) => {
-      bodyEl.setAttribute('data-theme', theme);
+      rootEl.setAttribute('data-theme', theme);
+      rootEl.style.colorScheme = theme;
+
+      if (themeColorMeta) {
+        themeColorMeta.setAttribute('content', theme === 'dark' ? '#180f14' : '#faf4f6');
+      }
+
       if (button) {
         button.textContent = theme === 'dark' ? 'Light Mode' : 'Dark Mode';
+        button.setAttribute(
+          'aria-label',
+          theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
+        );
       }
     };
 
-    const savedTheme = localStorage.getItem(storageKey);
-    const initialTheme = savedTheme === 'light' ? 'light' : 'dark';
-    applyTheme(initialTheme);
+    applyTheme(getSavedTheme() ?? getPreferredTheme());
+
+    document.querySelectorAll('a[target="_blank"]').forEach((link) => {
+      const hint = document.createElement('span');
+      hint.className = 'sr-only';
+      hint.textContent = ' (opens in new tab)';
+      link.appendChild(hint);
+    });
+
+    window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', (event) => {
+      if (getSavedTheme()) {
+        return;
+      }
+
+      applyTheme(event.matches ? 'light' : 'dark');
+    });
 
     if (button) {
       button.addEventListener('click', () => {
-        const nextTheme = bodyEl.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+        const nextTheme = rootEl.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
         applyTheme(nextTheme);
         localStorage.setItem(storageKey, nextTheme);
       });
