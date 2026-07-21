@@ -7,7 +7,9 @@
   <meta name="theme-color" content="#180f14">
   <title>Seven Pens</title>
   <link rel="canonical" href="https://sevenpens.com/">
-  <link rel="icon" href="/7P-Logo-Core.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-dark.svg" type="image/svg+xml" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="/favicon-light.svg" type="image/svg+xml" media="(prefers-color-scheme: light)">
+  <link rel="icon" href="/favicon-light.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Seven Pens">
@@ -121,14 +123,14 @@
       width: 100%;
       display: grid;
       grid-template-columns: 1fr;
-      align-items: center;
+      align-items: start;
       gap: 3vw;
       padding: clamp(1.2rem, 3.2vw, 2.8rem);
     }
 
     .content {
-      max-width: 1400px;
-      width: min(92%, 1400px);
+      max-width: 1600px;
+      width: min(96%, 1600px);
       justify-self: start;
       padding: clamp(1.2rem, 2.5vw, 2rem);
     }
@@ -193,7 +195,7 @@
 
     .tool-desc {
       color: var(--text-muted);
-      font-size: 0.65rem;
+      font-size: 0.78rem;
       font-weight: 400;
       letter-spacing: normal;
       text-transform: none;
@@ -201,7 +203,7 @@
 
     .tools-columns {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: clamp(1.5rem, 4vw, 3rem);
       align-items: start;
     }
@@ -223,6 +225,12 @@
       text-transform: uppercase;
       cursor: pointer;
       backdrop-filter: blur(6px);
+    }
+
+    @media (max-width: 1200px) {
+      .tools-columns {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
     }
 
     @media (max-width: 1000px) {
@@ -275,31 +283,37 @@
         <nav class="tools-column" aria-labelledby="online-tools-heading">
           <h2 class="tools-title" id="online-tools-heading">Online tools</h2>
           <ul class="tools">
+            <li><a href="https://thesevenpens.github.io/DrawTabDataExplorer/" target="_blank" rel="noopener noreferrer">Drawing tablet data explorer</a></li>
             <li><a href="https://thesevenpens.github.io/WebPressureExplorer/" target="_blank" rel="noopener noreferrer">Pressure Explorer</a></li>
-            <li><a href="https://thesevenpens.github.io/WebTabletTesterBasic/" target="_blank" rel="noopener noreferrer">Tablet Tester Basic</a></li>
-            <li><a href="https://thesevenpens.github.io/WebTabletTester/" target="_blank" rel="noopener noreferrer">Tablet Tester Advanced</a></li>
-            <li><a href="https://thesevenpens.github.io/DrawTabDataExplorer/" target="_blank" rel="noopener noreferrer">Data Explorer</a></li>
             <li><a href="https://thesevenpens.github.io/WebDrawTabSim/" target="_blank" rel="noopener noreferrer">Tablet simulator</a></li>
             <li><a href="https://thesevenpens.github.io/WebDrawTabLagSim/" target="_blank" rel="noopener noreferrer">Lag simulator</a></li>
+            <li><a href="https://thesevenpens.github.io/WebTabletTesterBasic/" target="_blank" rel="noopener noreferrer">Tablet Tester Basic</a></li>
+            <li><a href="https://thesevenpens.github.io/WebTabletTester/" target="_blank" rel="noopener noreferrer">Tablet Tester Advanced</a></li>
           </ul>
         </nav>
 
-        <nav class="tools-column" aria-labelledby="tools-libraries-heading">
-          <h2 class="tools-title" id="tools-libraries-heading">Tools and Libraries</h2>
+        <nav class="tools-column" aria-labelledby="tools-heading">
+          <h2 class="tools-title" id="tools-heading">Tools</h2>
           <ul class="tools">
-            <li><a href="https://github.com/TheSevenPens/PixelSharpnessTester" target="_blank" rel="noopener noreferrer">Pixel sharpness tester</a></li>
             <li class="tool-item">
-              <a href="https://github.com/TheSevenPens/WinPenKit" target="_blank" rel="noopener noreferrer">WinPenKit</a>
-              <span class="tool-desc">(Windows only) - library to make it easy to use and switch between WinTab and Windows Ink APIs</span>
-            </li>
-            <li><a href="https://github.com/TheSevenPens/OTDWindowsHelper" target="_blank" rel="noopener noreferrer">OTDWindowsHelper</a>
+              <a href="https://github.com/TheSevenPens/OpenTabletArtist" target="_blank" rel="noopener noreferrer">OpenTabletArtist</a>
               <span class="tool-desc">(Windows only) - A UI to make it simple to use OpenTabletDriver on Windows for artists</span>
             </li>
+            <li><a href="https://github.com/TheSevenPens/PixelSharpnessTester" target="_blank" rel="noopener noreferrer">Pixel sharpness tester</a></li>
             <li class="tool-item">
               <a href="https://github.com/TheSevenPens/PenPressureProfiler" target="_blank" rel="noopener noreferrer">PenPressureProfiler</a>
               <span class="tool-desc">(Windows only) - Tool to make mereasure a pen's pressure response. Requires a specific scale for physical force measurements.</span>
             </li>
-            
+          </ul>
+        </nav>
+
+        <nav class="tools-column" aria-labelledby="libraries-heading">
+          <h2 class="tools-title" id="libraries-heading">Libraries</h2>
+          <ul class="tools">
+            <li class="tool-item">
+              <a href="https://github.com/TheSevenPens/WinPenKit" target="_blank" rel="noopener noreferrer">WinPenKit</a>
+              <span class="tool-desc">(Windows only) - library to make it easy to use and switch between WinTab and Windows Ink APIs</span>
+            </li>
           </ul>
         </nav>
       </div>
