@@ -163,20 +163,23 @@
       gap: 0.25rem;
     }
 
-    .tools a {
+    .tools a,
+    .tools-group a {
       text-decoration: none;
       color: var(--text-link);
       font-weight: 500;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      font-size: 0.73rem;
+      font-size: 0.82rem;
     }
 
-    .tools a:hover {
+    .tools a:hover,
+    .tools-group a:hover {
       color: var(--text-link-hover);
     }
 
     .tools a:focus-visible,
+    .tools-group a:focus-visible,
     .theme-toggle:focus-visible {
       outline: 2px solid var(--accent);
       outline-offset: 2px;
@@ -193,9 +196,30 @@
       font-size: 1.05rem;
     }
 
+    .tools-subtitle {
+      margin: 1.1rem 0 0.45rem;
+      color: var(--text-heading);
+      font-weight: 650;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+    }
+
+    .tools-subtitle:first-of-type {
+      margin-top: 0;
+    }
+
+    .tools-group {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.6rem;
+    }
+
     .tool-desc {
       color: var(--text-muted);
-      font-size: 0.78rem;
+      font-size: 0.86rem;
       font-weight: 400;
       letter-spacing: normal;
       text-transform: none;
@@ -203,9 +227,15 @@
 
     .tools-columns {
       display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: clamp(1.5rem, 4vw, 3rem);
       align-items: start;
+    }
+
+    .tools-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
     }
 
     .theme-toggle {
@@ -262,31 +292,43 @@
 
       <div class="tools-columns">
 
-        <nav class="tools-column" aria-labelledby="social-heading">
-          <h2 class="tools-title" id="social-heading">Social</h2>
-          <ul class="tools">
-            <li><a href="https://www.youtube.com/@sevenpens" target="_blank" rel="noopener noreferrer">YouTube</a></li>
-            <li><a href="https://x.com/TheSevenPens" target="_blank" rel="noopener noreferrer">X (TWITTER)</a></li>
-            <li><a href="https://discord.gg/Rr2MXeM7Ny" target="_blank" rel="noopener noreferrer">Drawing tablet Discord</a></li>
-            <li><a href="https://github.com/TheSevenPens" target="_blank" rel="noopener noreferrer">Github</a></li>
-          </ul>
-        </nav>
+        <div class="tools-stack">
+          <nav class="tools-column" aria-labelledby="social-heading">
+            <h2 class="tools-title" id="social-heading">Social</h2>
+            <ul class="tools">
+              <li><a href="https://www.youtube.com/@sevenpens" target="_blank" rel="noopener noreferrer">YouTube</a></li>
+              <li><a href="https://x.com/TheSevenPens" target="_blank" rel="noopener noreferrer">X (TWITTER)</a></li>
+              <li><a href="https://discord.gg/Rr2MXeM7Ny" target="_blank" rel="noopener noreferrer">Drawing tablet Discord</a></li>
+              <li><a href="https://github.com/TheSevenPens" target="_blank" rel="noopener noreferrer">Github</a></li>
+            </ul>
+          </nav>
 
-        <nav class="tools-column" aria-labelledby="docs-heading">
-          <h2 class="tools-title" id="docs-heading">Docs</h2>
-          <ul class="tools">
-            <li><a href="https://docs.sevenpens.com/drawtab" target="_blank" rel="noopener noreferrer">Drawing tablet docs</a></li>
-            <li><a href="https://docs.sevenpens.com/devnotes" target="_blank" rel="noopener noreferrer">Developer notes</a></li>
-          </ul>
-        </nav>
+          <nav class="tools-column" aria-labelledby="docs-heading">
+            <h2 class="tools-title" id="docs-heading">Docs</h2>
+            <ul class="tools">
+              <li><a href="https://docs.sevenpens.com/drawtab" target="_blank" rel="noopener noreferrer">Drawing tablet docs</a></li>
+              <li><a href="https://docs.sevenpens.com/devnotes" target="_blank" rel="noopener noreferrer">Developer notes</a></li>
+            </ul>
+          </nav>
+        </div>
 
         <nav class="tools-column" aria-labelledby="online-tools-heading">
           <h2 class="tools-title" id="online-tools-heading">Online tools</h2>
-          <ul class="tools">
+
+          <h3 class="tools-subtitle" id="explorers-heading">Explorers</h3>
+          <ul class="tools-group" aria-labelledby="explorers-heading">
             <li><a href="https://thesevenpens.github.io/DrawTabDataExplorer/" target="_blank" rel="noopener noreferrer">Drawing tablet data explorer</a></li>
             <li><a href="https://thesevenpens.github.io/WebPressureExplorer/" target="_blank" rel="noopener noreferrer">Pressure Explorer</a></li>
+          </ul>
+
+          <h3 class="tools-subtitle" id="simulators-heading">Simulators</h3>
+          <ul class="tools-group" aria-labelledby="simulators-heading">
             <li><a href="https://thesevenpens.github.io/WebDrawTabSim/" target="_blank" rel="noopener noreferrer">Tablet simulator</a></li>
             <li><a href="https://thesevenpens.github.io/WebDrawTabLagSim/" target="_blank" rel="noopener noreferrer">Lag simulator</a></li>
+          </ul>
+
+          <h3 class="tools-subtitle" id="testers-heading">Testers</h3>
+          <ul class="tools-group" aria-labelledby="testers-heading">
             <li><a href="https://thesevenpens.github.io/WebTabletTesterBasic/" target="_blank" rel="noopener noreferrer">Tablet Tester Basic</a></li>
             <li><a href="https://thesevenpens.github.io/WebTabletTester/" target="_blank" rel="noopener noreferrer">Tablet Tester Advanced</a></li>
           </ul>
