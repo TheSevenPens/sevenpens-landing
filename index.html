@@ -42,30 +42,22 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@8..144,300..800&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
+    /* Layout: Zune-style pivot. Lowercase section names in a single static row;
+       the active one is bright, the rest fade. Type alone carries the structure. */
     :root {
       color-scheme: dark;
       --bg-1: #180f14;
       --bg-2: #221019;
       --bg-3: #2d1420;
-      --glow-a: rgba(196, 90, 130, 0.16);
-      --glow-b: rgba(139, 42, 82, 0.12);
-      --glow-c: rgba(210, 130, 170, 0.08);
-      --shadow-a: rgba(0, 0, 0, 0.38);
-      --text-main: #ede0e8;
-      --text-heading: #f5eaf0;
-      --text-link: #d48aa8;
-      --text-link-hover: #e8a8c4;
-      --text-muted: rgba(237, 224, 232, 0.55);
-      --accent: #c44d7a;
+      --fg: #ede0e8;
+      --fg-strong: #f5eaf0;
+      --muted: rgba(237, 224, 232, 0.55);
+      --faint: rgba(237, 224, 232, 0.22);
+      --accent: #d65f8c;
+      --link: #e8a8c4;
       --toggle-bg: rgba(24, 15, 20, 0.78);
       --toggle-border: rgba(237, 224, 232, 0.2);
-      --toggle-text: #ede0e8;
+      --font: "Google Sans Flex", "Segoe UI", system-ui, sans-serif;
     }
 
     html[data-theme="light"] {
@@ -73,37 +65,28 @@
       --bg-1: #faf4f6;
       --bg-2: #f2e8ed;
       --bg-3: #e8dce4;
-      --glow-a: rgba(196, 90, 130, 0.18);
-      --glow-b: rgba(139, 42, 82, 0.1);
-      --glow-c: rgba(200, 120, 160, 0.12);
-      --shadow-a: rgba(74, 40, 56, 0.08);
-      --text-main: #4a3238;
-      --text-heading: #3a2228;
-      --text-link: #9e4268;
-      --text-link-hover: #b85684;
-      --text-muted: rgba(74, 50, 56, 0.52);
-      --accent: #c44d7a;
+      --fg: #4a3238;
+      --fg-strong: #2e1a20;
+      --muted: rgba(74, 50, 56, 0.6);
+      --faint: rgba(74, 50, 56, 0.2);
+      --accent: #b23e6c;
+      --link: #9e4268;
       --toggle-bg: rgba(250, 244, 246, 0.9);
       --toggle-border: rgba(74, 50, 56, 0.18);
-      --toggle-text: #3a2228;
     }
 
-    html,
-    body {
-      height: 100%;
-    }
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html, body { min-height: 100%; }
 
     body {
-      min-height: 100vh;
-      font-family: "Google Sans Flex", "Segoe UI", sans-serif;
-      color: var(--text-main);
+      margin: 0;
+      font-family: var(--font);
+      color: var(--fg);
+      background: linear-gradient(130deg, var(--bg-1), var(--bg-2) 45%, var(--bg-3));
+      background-color: var(--bg-1);
+      background-attachment: fixed;
       overflow-x: hidden;
-      background:
-        radial-gradient(120vmax 90vmax at 12% 18%, var(--glow-a) 0%, transparent 55%),
-        radial-gradient(90vmax 80vmax at 90% 85%, var(--glow-b) 0%, transparent 58%),
-        radial-gradient(70vmax 60vmax at 48% 40%, var(--glow-c) 0%, transparent 60%),
-        radial-gradient(130vmax 100vmax at 52% 62%, var(--shadow-a) 0%, transparent 62%),
-        linear-gradient(130deg, var(--bg-1), var(--bg-2) 42%, var(--bg-3));
     }
 
     .sr-only {
@@ -118,134 +101,152 @@
       border: 0;
     }
 
-    .layout {
-      min-height: 100vh;
-      width: 100%;
-      display: grid;
-      grid-template-columns: 1fr;
-      align-items: start;
-      gap: 3vw;
-      padding: clamp(1.2rem, 3.2vw, 2.8rem);
-    }
-
-    .content {
-      max-width: 1600px;
-      width: min(96%, 1600px);
-      justify-self: start;
-      padding: clamp(1.2rem, 2.5vw, 2rem);
+    .shell {
+      padding-block: clamp(1.4rem, 4vw, 3rem) 4rem;
+      padding-left: max(16px, env(safe-area-inset-left, 0px), 4vw);
+      padding-right: max(16px, env(safe-area-inset-right, 0px));
     }
 
     h1 {
-      font-size: clamp(2rem, 5vw, 3.8rem);
+      margin: 0 0 0.4rem;
+      font-size: 0.8rem;
       font-weight: 650;
-      line-height: 0.95;
-      letter-spacing: -0.03em;
-      color: var(--text-main);
-      margin-bottom: 0.8rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--fg-strong);
     }
 
-    h1 span {
+    h1 span { color: var(--accent); }
+
+    /* Section headings */
+    .pivot {
+      display: flex;
+      flex-wrap: wrap;
+      column-gap: clamp(0.9rem, 2.2vw, 1.8rem);
+      row-gap: 0.1rem;
+      padding: 0 0 0.3rem;
+    }
+
+    .pivot button {
+      flex: none;
+      font: inherit;
+      font-size: clamp(1.9rem, 4vw, 3rem);
+      font-weight: 300;
+      letter-spacing: -0.035em;
+      line-height: 1.05;
+      text-transform: lowercase;
+      color: var(--faint);
+      background: none;
+      border: 0;
+      padding: 0;
+      cursor: pointer;
+      transition: color 220ms ease;
+    }
+
+    .pivot button:hover { color: var(--muted); }
+    .pivot button[aria-selected="true"] { color: var(--fg-strong); }
+
+    /* Panels */
+    .panel { margin-top: clamp(1.4rem, 3vw, 2.4rem); max-width: 46rem; }
+    .panel.enter { animation: slide 320ms cubic-bezier(0.1, 0.9, 0.2, 1) both; }
+
+    @keyframes slide {
+      from { opacity: 0; transform: translateX(48px); }
+      to { opacity: 1; transform: none; }
+    }
+
+    .panel h2 {
+      margin: 0 0 0.6rem;
+      font-size: 1.05rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      text-transform: lowercase;
       color: var(--accent);
     }
 
-    .tools {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 0.6rem;
-    }
-
-    .tool-item {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 0.25rem;
-    }
-
-    .tools a,
-    .tools-group a {
-      text-decoration: none;
-      color: var(--text-link);
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      font-size: 0.82rem;
-    }
-
-    .tools a:hover,
-    .tools-group a:hover {
-      color: var(--text-link-hover);
-    }
-
-    .tools a:focus-visible,
-    .tools-group a:focus-visible,
-    .theme-toggle:focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 2px;
-    }
-
-    .tools-title {
-      margin-bottom: 1rem;
-      padding-bottom: 0.55rem;
-      border-bottom: 1px solid var(--toggle-border);
-      color: var(--text-heading);
-      font-weight: 650;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      font-size: 1.05rem;
-    }
-
-    .tools-subtitle {
-      margin: 1.1rem 0 0.45rem;
-      color: var(--text-heading);
-      font-weight: 650;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      font-size: 0.8rem;
-    }
-
-    .tools-subtitle:first-of-type {
-      margin-top: 0;
-    }
-
-    .tools-group {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 0.6rem;
-    }
-
-    .tool-desc {
-      color: var(--text-muted);
-      font-size: 0.86rem;
-      font-weight: 400;
-      letter-spacing: normal;
-      text-transform: none;
-    }
-
-    .tools-columns {
+    /* Sections with several groups: one column per group, stacking on narrow screens */
+    .panel.cols {
+      max-width: 84rem;
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: clamp(1.5rem, 4vw, 3rem);
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+      gap: 2.2rem clamp(2rem, 4vw, 3.5rem);
       align-items: start;
     }
 
-    .tools-stack {
+    .panel.cols .group { min-width: 0; }
+    .panel.cols .items .name { font-size: clamp(1.35rem, 2.4vw, 1.7rem); }
+    .panel.cols .items p { font-size: 0.9rem; }
+
+    .items {
+      list-style: none;
+      margin: 0;
+      padding: 0;
       display: flex;
       flex-direction: column;
-      gap: 2rem;
+      gap: 1.15rem;
+    }
+
+    .items .name {
+      margin: 0;
+      font-size: clamp(1.45rem, 3.4vw, 2rem);
+      font-weight: 350;
+      letter-spacing: -0.015em;
+      line-height: 1.15;
+      text-transform: lowercase;
+      color: var(--fg-strong);
+    }
+
+    .items .url {
+      display: inline-block;
+      margin-top: 0.2rem;
+      font-size: 0.92rem;
+      letter-spacing: 0.01em;
+      color: var(--link);
+      text-decoration: underline;
+      text-decoration-color: color-mix(in srgb, var(--link) 45%, transparent);
+      text-underline-offset: 0.2em;
+      overflow-wrap: anywhere;
+      transition: color 160ms ease, text-decoration-color 160ms ease;
+    }
+
+    .items .url:hover {
+      color: var(--fg-strong);
+      text-decoration-color: currentColor;
+    }
+
+    .items p {
+      margin: 0.3rem 0 0;
+      max-width: 62ch;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+
+    .tag {
+      margin-right: 0.5em;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .hint {
+      margin: 3.5rem 0 0;
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      text-transform: lowercase;
+      color: var(--faint);
     }
 
     .theme-toggle {
       position: fixed;
-      right: 1rem;
-      bottom: 1rem;
+      right: calc(1rem + env(safe-area-inset-right, 0px));
+      bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
       z-index: 10;
       border: 1px solid var(--toggle-border);
       background: var(--toggle-bg);
-      color: var(--toggle-text);
+      color: var(--fg-strong);
       padding: 0.48rem 0.72rem;
       border-radius: 999px;
       font-family: inherit;
@@ -257,114 +258,157 @@
       backdrop-filter: blur(6px);
     }
 
-    @media (max-width: 1200px) {
-      .tools-columns {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
+    .pivot button:focus-visible,
+    .items .url:focus-visible,
+    .theme-toggle:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
     }
 
-    @media (max-width: 1000px) {
-      .tools-columns {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 700px) {
-      .layout {
-        gap: 1.2rem;
-        padding: 1rem;
-      }
-
-      .content {
-        width: 100%;
-      }
-
-      .tools-columns {
-        grid-template-columns: 1fr;
-      }
+    @media (prefers-reduced-motion: reduce) {
+      .panel.enter { animation: none; }
+      .items .url, .pivot button { transition: none; }
     }
   </style>
 </head>
 <body>
-  <main class="layout" id="main">
-    <div class="content">
-      <h1>Seven <span>Pens</span></h1>
+  <main class="shell" id="main">
+    <h1>Seven <span>Pens</span></h1>
 
-      <div class="tools-columns">
-
-        <div class="tools-stack">
-          <nav class="tools-column" aria-labelledby="social-heading">
-            <h2 class="tools-title" id="social-heading">Social</h2>
-            <ul class="tools">
-              <li><a href="https://www.youtube.com/@sevenpens" target="_blank" rel="noopener noreferrer">YouTube</a></li>
-              <li><a href="https://x.com/TheSevenPens" target="_blank" rel="noopener noreferrer">X (TWITTER)</a></li>
-              <li><a href="https://discord.gg/Rr2MXeM7Ny" target="_blank" rel="noopener noreferrer">Drawing tablet Discord</a></li>
-              <li><a href="https://github.com/TheSevenPens" target="_blank" rel="noopener noreferrer">Github</a></li>
-            </ul>
-          </nav>
-
-          <nav class="tools-column" aria-labelledby="docs-heading">
-            <h2 class="tools-title" id="docs-heading">Docs</h2>
-            <ul class="tools">
-              <li><a href="https://docs.sevenpens.com/drawtab" target="_blank" rel="noopener noreferrer">Drawing tablet docs</a></li>
-              <li><a href="https://docs.sevenpens.com/devnotes" target="_blank" rel="noopener noreferrer">Developer notes</a></li>
-            </ul>
-          </nav>
-        </div>
-
-        <nav class="tools-column" aria-labelledby="online-tools-heading">
-          <h2 class="tools-title" id="online-tools-heading">Online tools</h2>
-
-          <h3 class="tools-subtitle" id="explorers-heading">Explorers</h3>
-          <ul class="tools-group" aria-labelledby="explorers-heading">
-            <li><a href="https://thesevenpens.github.io/DrawTabDataExplorer/" target="_blank" rel="noopener noreferrer">Drawing tablet data explorer</a></li>
-            <li><a href="https://thesevenpens.github.io/WebPressureExplorer/" target="_blank" rel="noopener noreferrer">Pressure Explorer</a></li>
-            <li><a href="https://thesevenpens.github.io/StrokeCorpus/" target="_blank" rel="noopener noreferrer">Stroke Corpus</a></li>
-          </ul>
-
-          <h3 class="tools-subtitle" id="simulators-heading">Simulators</h3>
-          <ul class="tools-group" aria-labelledby="simulators-heading">
-            <li><a href="https://thesevenpens.github.io/WebDrawTabSim/" target="_blank" rel="noopener noreferrer">Tablet simulator</a></li>
-            <li><a href="https://thesevenpens.github.io/WebDrawTabLagSim/" target="_blank" rel="noopener noreferrer">Lag simulator</a></li>
-          </ul>
-
-          <h3 class="tools-subtitle" id="testers-heading">Testers</h3>
-          <ul class="tools-group" aria-labelledby="testers-heading">
-            <li><a href="https://thesevenpens.github.io/WebTabletTesterBasic/" target="_blank" rel="noopener noreferrer">Tablet Tester Basic</a></li>
-            <li><a href="https://thesevenpens.github.io/WebTabletTester/" target="_blank" rel="noopener noreferrer">Tablet Tester Advanced</a></li>
-          </ul>
-        </nav>
-
-        <nav class="tools-column" aria-labelledby="tools-heading">
-          <h2 class="tools-title" id="tools-heading">Tools</h2>
-          <ul class="tools">
-            <li class="tool-item">
-              <a href="https://thesevenpens.github.io/OpenTabletArtist/" target="_blank" rel="noopener noreferrer">OpenTabletArtist</a>
-              <span class="tool-desc">(Windows only) - A UI to make it simple to use OpenTabletDriver on Windows for artists</span>
-            </li>
-            <li><a href="https://github.com/TheSevenPens/PixelSharpnessTester" target="_blank" rel="noopener noreferrer">Pixel sharpness tester</a></li>
-            <li class="tool-item">
-              <a href="https://github.com/TheSevenPens/PenPressureProfiler" target="_blank" rel="noopener noreferrer">Pen Pressure Profiler</a>
-              <span class="tool-desc">(Windows only) - Tool to measure a pen's pressure response. Requires a specific scale for physical force measurements.</span>
-            </li>
-            <li class="tool-item">
-              <a href="https://github.com/TheSevenPens/StrokeRecorder" target="_blank" rel="noopener noreferrer">Stroke Recorder</a>
-              <span class="tool-desc">(Windows only) - Record stroke data for later analysis and storage in StrokeCorpus</span>
-            </li>            
-          </ul>
-        </nav>
-
-        <nav class="tools-column" aria-labelledby="libraries-heading">
-          <h2 class="tools-title" id="libraries-heading">Libraries</h2>
-          <ul class="tools">
-            <li class="tool-item">
-              <a href="https://github.com/TheSevenPens/WinPenKit" target="_blank" rel="noopener noreferrer">WinPenKit</a>
-              <span class="tool-desc">(Windows only) - library to make it easy to use and switch between WinTab and Windows Ink APIs</span>
-            </li>
-          </ul>
-        </nav>
-      </div>
+    <div class="pivot" role="tablist" aria-label="Sections" id="pivot">
+      <button type="button" role="tab" id="tab-social" aria-controls="social">social</button>
+      <button type="button" role="tab" id="tab-docs" aria-controls="docs">docs</button>
+      <button type="button" role="tab" id="tab-online-tools" aria-controls="online-tools">online tools</button>
+      <button type="button" role="tab" id="tab-datasets" aria-controls="datasets">datasets</button>
+      <button type="button" role="tab" id="tab-tools" aria-controls="tools">tools</button>
+      <button type="button" role="tab" id="tab-libraries" aria-controls="libraries">libraries</button>
     </div>
+
+    <section class="panel" id="social" role="tabpanel" aria-labelledby="tab-social">
+      <ul class="items">
+        <li>
+          <h3 class="name">YouTube</h3>
+          <a class="url" href="https://www.youtube.com/@sevenpens" target="_blank" rel="noopener noreferrer">youtube.com/@sevenpens</a>
+        </li>
+        <li>
+          <h3 class="name">X (Twitter)</h3>
+          <a class="url" href="https://x.com/TheSevenPens" target="_blank" rel="noopener noreferrer">x.com/TheSevenPens</a>
+        </li>
+        <li>
+          <h3 class="name">Drawing tablet Discord</h3>
+          <a class="url" href="https://discord.gg/Rr2MXeM7Ny" target="_blank" rel="noopener noreferrer">discord.gg/Rr2MXeM7Ny</a>
+        </li>
+        <li>
+          <h3 class="name">GitHub</h3>
+          <a class="url" href="https://github.com/TheSevenPens" target="_blank" rel="noopener noreferrer">github.com/TheSevenPens</a>
+        </li>
+      </ul>
+    </section>
+
+    <section class="panel" id="docs" role="tabpanel" aria-labelledby="tab-docs">
+      <ul class="items">
+        <li>
+          <h3 class="name">Drawing tablet docs</h3>
+          <a class="url" href="https://docs.sevenpens.com/drawtab" target="_blank" rel="noopener noreferrer">docs.sevenpens.com/drawtab</a>
+          <p>General information for drawing tablet users: how tablets work, what to look for when buying one, my recommendations, and help with troubleshooting problems.</p>
+        </li>
+        <li>
+          <h3 class="name">Developer notes</h3>
+          <a class="url" href="https://docs.sevenpens.com/devnotes" target="_blank" rel="noopener noreferrer">docs.sevenpens.com/devnotes</a>
+          <p><span class="tag">Experimental</span>A loose collection of notes I keep for my own use while developing tools for creative apps and drawing tablets.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section class="panel cols" id="online-tools" role="tabpanel" aria-labelledby="tab-online-tools">
+      <div class="group">
+        <h2>simulators</h2>
+        <ul class="items">
+          <li>
+            <h3 class="name">Tablet simulator</h3>
+            <a class="url" href="https://thesevenpens.github.io/WebDrawTabSim/" target="_blank" rel="noopener noreferrer">thesevenpens.github.io/WebDrawTabSim</a>
+            <p>An interactive 3D view of a drawing tablet and pen on a desk with a monitor. Useful for diagrams that illustrate concepts such as active area mapping, pen orientation (tilt and barrel rotation), and position tracking accuracy.</p>
+          </li>
+          <li>
+            <h3 class="name">Lag simulator</h3>
+            <a class="url" href="https://thesevenpens.github.io/WebDrawTabLagSim/" target="_blank" rel="noopener noreferrer">thesevenpens.github.io/WebDrawTabLagSim</a>
+            <p>A live animation for exploring how different rates and latencies affect the end-to-end path of a position, from when the tablet reports it to when it appears on the display.</p>
+          </li>
+        </ul>
+      </div>
+      <div class="group">
+        <h2>testers</h2>
+        <ul class="items">
+          <li>
+            <h3 class="name">Tablet Tester Basic</h3>
+            <a class="url" href="https://thesevenpens.github.io/WebTabletTesterBasic/" target="_blank" rel="noopener noreferrer">thesevenpens.github.io/WebTabletTesterBasic</a>
+            <p>A very simple web tool for quick diagnostics of drawing tablet behavior. Use it to check whether a tablet's core features are working. For deeper testing, desktop tools are recommended.</p>
+          </li>
+          <li>
+            <h3 class="name">Tablet Tester Advanced</h3>
+            <a class="url" href="https://thesevenpens.github.io/WebTabletTester/" target="_blank" rel="noopener noreferrer">thesevenpens.github.io/WebTabletTester</a>
+            <p>An experimental tool that goes beyond basic checks of drawing tablet features to explore areas of digital art such as brush engines and stroke rendering.</p>
+          </li>
+          <li>
+            <h3 class="name">Pressure Explorer</h3>
+            <a class="url" href="https://thesevenpens.github.io/WebPressureExplorer/" target="_blank" rel="noopener noreferrer">thesevenpens.github.io/WebPressureExplorer</a>
+            <p>See how pressure processing, such as curves and different smoothing algorithms, affects how pressure is handled and how it shows up in stroke rendering.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="panel" id="datasets" role="tabpanel" aria-labelledby="tab-datasets">
+      <ul class="items">
+        <li>
+          <h3 class="name">Drawing tablet data</h3>
+          <a class="url" href="https://thesevenpens.github.io/DrawTabDataExplorer/" target="_blank" rel="noopener noreferrer">thesevenpens.github.io/DrawTabDataExplorer</a>
+          <p>Explore public datasets for tablets, pens, and drivers, allowing you to view specs as well as performance measurements.</p>
+        </li>
+        <li>
+          <h3 class="name">Stroke Corpus</h3>
+          <a class="url" href="https://thesevenpens.github.io/StrokeCorpus/" target="_blank" rel="noopener noreferrer">thesevenpens.github.io/StrokeCorpus</a>
+          <p>A collection of carefully recorded strokes from multiple drawing tablets and pens. See every data point the tablet reported and replay the strokes, useful for analysis and for testing brush engines.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section class="panel" id="tools" role="tabpanel" aria-labelledby="tab-tools">
+      <ul class="items">
+        <li>
+          <h3 class="name">Open Tablet Artist</h3>
+          <a class="url" href="https://thesevenpens.github.io/OpenTabletArtist/" target="_blank" rel="noopener noreferrer">thesevenpens.github.io/OpenTabletArtist</a>
+          <p><span class="tag">Windows</span>A UI to make it simple to use OpenTabletDriver on Windows for artists.</p>
+        </li>
+        <li>
+          <h3 class="name">Pixel sharpness tester</h3>
+          <a class="url" href="https://github.com/TheSevenPens/PixelSharpnessTester" target="_blank" rel="noopener noreferrer">github.com/TheSevenPens/PixelSharpnessTester</a>
+          <p><span class="tag">Windows</span>Shows test patterns on screen in a standard, consistent way, so you can judge how sharp text and other details look to the eye without apps or the operating system applying their own text rendering or anti-aliasing.</p>
+        </li>
+        <li>
+          <h3 class="name">Pen Pressure Profiler</h3>
+          <a class="url" href="https://github.com/TheSevenPens/PenPressureProfiler" target="_blank" rel="noopener noreferrer">github.com/TheSevenPens/PenPressureProfiler</a>
+          <p><span class="tag">Windows</span>Tool to measure a pen's pressure response. Requires a specific scale for physical force measurements.</p>
+        </li>
+        <li>
+          <h3 class="name">Stroke Recorder</h3>
+          <a class="url" href="https://github.com/TheSevenPens/StrokeRecorder" target="_blank" rel="noopener noreferrer">github.com/TheSevenPens/StrokeRecorder</a>
+          <p><span class="tag">Windows</span>Record stroke data for later analysis and storage in StrokeCorpus.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section class="panel" id="libraries" role="tabpanel" aria-labelledby="tab-libraries">
+      <ul class="items">
+        <li>
+          <h3 class="name">WinPenKit</h3>
+          <a class="url" href="https://github.com/TheSevenPens/WinPenKit" target="_blank" rel="noopener noreferrer">github.com/TheSevenPens/WinPenKit</a>
+          <p><span class="tag">Windows</span>Library to make it easy to use and switch between WinTab and Windows Ink APIs.</p>
+        </li>
+      </ul>
+    </section>
+
+    <p class="hint" id="hint" hidden>tap a heading, swipe, or use the arrow keys to move between sections</p>
   </main>
   <button class="theme-toggle" type="button" aria-label="Switch to light mode">Light Mode</button>
   <script>
@@ -378,8 +422,12 @@
     );
 
     const getSavedTheme = () => {
-      const savedTheme = localStorage.getItem(storageKey);
-      return savedTheme === 'light' || savedTheme === 'dark' ? savedTheme : null;
+      try {
+        const savedTheme = localStorage.getItem(storageKey);
+        return savedTheme === 'light' || savedTheme === 'dark' ? savedTheme : null;
+      } catch (e) {
+        return null;
+      }
     };
 
     const applyTheme = (theme) => {
@@ -420,9 +468,79 @@
       button.addEventListener('click', () => {
         const nextTheme = rootEl.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
         applyTheme(nextTheme);
-        localStorage.setItem(storageKey, nextTheme);
+        try {
+          localStorage.setItem(storageKey, nextTheme);
+        } catch (e) {
+          /* theme just won't be remembered */
+        }
       });
     }
+
+    // Section navigation. Without JavaScript every section stays visible as a long page.
+    const tabs = [...document.querySelectorAll('#pivot [role="tab"]')];
+    const panels = tabs.map((tab) => document.getElementById(tab.getAttribute('aria-controls')));
+    let current = -1;
+
+    const show = (index, animate = true) => {
+      index = (index + tabs.length) % tabs.length;
+      if (index === current) {
+        return;
+      }
+      current = index;
+
+      tabs.forEach((tab, i) => {
+        tab.setAttribute('aria-selected', i === index ? 'true' : 'false');
+        tab.tabIndex = i === index ? 0 : -1;
+      });
+
+      panels.forEach((panel, i) => {
+        panel.hidden = i !== index;
+        panel.classList.remove('enter');
+      });
+
+      if (animate) {
+        void panels[index].offsetWidth;
+        panels[index].classList.add('enter');
+      }
+
+      const hash = '#' + panels[index].id;
+      if (location.hash !== hash) {
+        history.replaceState(null, '', hash);
+      }
+    };
+
+    tabs.forEach((tab, i) => tab.addEventListener('click', () => show(i)));
+
+    document.getElementById('pivot').addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+        show(current + (event.key === 'ArrowRight' ? 1 : -1));
+        tabs[current].focus();
+        event.preventDefault();
+      }
+    });
+
+    let startX = null;
+    let startY = null;
+    document.getElementById('main').addEventListener('touchstart', (event) => {
+      startX = event.touches[0].clientX;
+      startY = event.touches[0].clientY;
+    }, { passive: true });
+    document.getElementById('main').addEventListener('touchend', (event) => {
+      if (startX === null) {
+        return;
+      }
+      const dx = event.changedTouches[0].clientX - startX;
+      const dy = event.changedTouches[0].clientY - startY;
+      if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+        show(current + (dx < 0 ? 1 : -1));
+      }
+      startX = null;
+    }, { passive: true });
+
+    const indexFromHash = () => Math.max(0, panels.findIndex((panel) => '#' + panel.id === location.hash));
+    window.addEventListener('hashchange', () => show(indexFromHash()));
+    document.getElementById('hint').hidden = false;
+    show(indexFromHash(), false);
   </script>
 </body>
 </html>
