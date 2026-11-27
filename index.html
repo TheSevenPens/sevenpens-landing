@@ -89,6 +89,12 @@
       overflow-x: hidden;
     }
 
+    /* Keep hidden sections hidden even when a layout rule (like the grid on
+       multi-column sections) sets a display value of its own. */
+    [hidden] {
+      display: none !important;
+    }
+
     .sr-only {
       position: absolute;
       width: 1px;
